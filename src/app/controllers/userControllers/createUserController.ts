@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { CreateUser } from "../../usecases/createUser";
+import { CreateUser } from "../../usecases/usersUseCases/createUser";
 
 export const prisma = new PrismaClient();
 
@@ -21,9 +21,7 @@ export class CreateUserController{
             //Deixandos senha vazia para não ser retornada
             user.password = "";
 
-            return res.send({
-                user
-            },);
+            return res.status(201).json(user);
         }
 
         catch(err){
