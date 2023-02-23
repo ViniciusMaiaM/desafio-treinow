@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { CreateUser } from "../usecases/createUser";
+import { CreateUser } from "../../usecases/createUser";
 
 export const prisma = new PrismaClient();
 
@@ -9,7 +9,7 @@ export class CreateUserController{
         const{name, email, document, type, password} = req.body;
         try{
 
-            //Verificando se já existe um usuário com mesmo email ou documento
+            //Verificando se o usuário já existe
             if(await prisma.user.findUnique({where:{email:email}})){
                 return res.status(400).send({error:"User already exists!"})
             }
@@ -17,6 +17,9 @@ export class CreateUserController{
             //Criando usuário
             const create = new CreateUser();
             const user = await create.execute({name,email,document,type,password});
+
+            //Deixandos senha vazia para não ser retornada
+            user.password = "";
 
             return res.send({
                 user
