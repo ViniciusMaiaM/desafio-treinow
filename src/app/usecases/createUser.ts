@@ -18,6 +18,11 @@ export class CreateUser{
         password
     }: typeUser): Promise<User> {
 
+        //Criptografando senha do usuário
+        const bcrypt = require("bcrypt");
+        const hash = await bcrypt.hash(password,10);
+        password = hash;
+
         //Criação de usuário
         const newUser = await prisma.user.create({
             data:{
