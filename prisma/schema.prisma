@@ -19,6 +19,16 @@ model User{
   password String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+  workouts   Workout[]
 
   @@map("users")
+}
+
+model Workout {
+  id         String   @id @unique @default(uuid())
+  start_time DateTime @default(now())
+  student       User     @relation(fields: [student_id], references: [id])
+  student_id    String   
+
+  @@map("workouts")
 }
