@@ -27,7 +27,7 @@ model User{
 model Workout {
   id         String   @id @unique @default(uuid())
   start_time DateTime @default(now())
-  student       User     @relation(fields: [student_id], references: [id])
+  student       User     @relation(fields: [student_id], references: [id], onDelete: Cascade)
   student_id    String   
 
   @@map("workouts")
