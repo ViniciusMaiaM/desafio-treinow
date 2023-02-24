@@ -10,16 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
-  id  String @unique @id @default(uuid())
-  name String
-  email String @unique
-  document String @unique
-  type String
-  password String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  workouts   Workout[]
+model User {
+  id              String     @id @unique @default(uuid())
+  name            String
+  email           String     @unique
+  document        String     @unique
+  type            String
+  password        String
+  created_at      DateTime   @default(now())
+  updated_at      DateTime   @updatedAt
+  workouts        Workout[]
+  personals       Personal[]
+  personal_rating Rating[]   @relation("personal_rating")
+  user_valuer     Rating[]   @relation("user_valuer")
+  students        Personal[] @relation("PersonalStudent")
+  exercise        Exercise[]
 
   @@map("users")
 }
@@ -27,8 +32,36 @@ model User{
 model Workout {
   id         String   @id @unique @default(uuid())
   start_time DateTime @default(now())
-  student       User     @relation(fields: [student_id], references: [id], onDelete: Cascade)
-  student_id    String   
+  student    User     @relation(fields: [student_id], references: [id], onDelete: Cascade)
+  student_id String
 
   @@map("workouts")
+}
+
+model Rating {
+  id          String @id @unique @default(uuid())
+  personal_id String
+  personal    User   @relation("personal_rating", fields: [personal_id], references: [id])
+  student_id  String
+  student     User   @relation("user_valuer", fields: [student_id], references: [id])
+  value       Int
+}
+
+model Personal {
+  id          String     @id @unique @default(uuid())
+  personal    User       @relation(fields: [personal_id], references: [id])
+  personal_id String
+  students    User[]     @relation("PersonalStudent")
+  exercises   Exercise[]
+}
+
+model Exercise {
+  id          String    @id @unique @default(uuid())
+  name        String
+  duration    Int
+  date        DateTime  @default(now())
+  personal_id String
+  personal    User      @relation(fields: [personal_id], references: [id])
+  Personal    Personal? @relation(fields: [personalId], references: [id])
+  personalId  String?
 }
