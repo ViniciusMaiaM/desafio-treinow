@@ -1,12 +1,22 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { CreatePersonalStudent } from "../../usecases/personalUseCase/createStudent";
-
+import { getUserIdFromToken } from "../../middlewares/getId";
 export const prisma = new PrismaClient();
+
 
 export class CreatePersonalStudentController {
     async handle(req: Request, res: Response) {
-        const { personal_id, student_id } = req.body;
+        const { student_id } = req.body;
+        const personal_id = getUserIdFromToken(req);
+
+        if(!personal_id){
+            return res.status(401).json({error: "Unauthorized"});
+        }
+
+        if (!student_id) {
+            return res.status(400).json({ error: "Student Id is required" });
+        }
 
         try {
             const personal = await prisma.user.findUnique({

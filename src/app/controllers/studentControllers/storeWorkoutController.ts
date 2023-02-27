@@ -10,7 +10,6 @@ export class StoreWorkoutController {
             return res.status(201).json(workout);
         } 
         catch (error) {
-            console.error(error);
             return res.status(500).json({ error: "Internal server error" });
         }
     }
