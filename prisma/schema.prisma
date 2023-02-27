@@ -48,9 +48,8 @@ model Rating {
 }
 
 model Personal {
-  id          String @id @unique @default(uuid())
   personal    User   @relation(fields: [personal_id], references: [id])
-  personal_id String
+  personal_id String @id @unique @default(uuid())
   students    User[] @relation("PersonalStudent")
 }
 
