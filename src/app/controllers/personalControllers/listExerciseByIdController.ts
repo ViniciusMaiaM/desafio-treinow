@@ -1,12 +1,18 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { ListExerciseById } from "../../usecases/personalUseCase/listExerciseById";
+import { getUserIdFromToken } from "../../middlewares/getId";
 
 export const prisma = new PrismaClient();
 
 export class ListExerciseByIdController {
     async handle(req: Request, res: Response){
-        const { personal_id } = req.body;
+        //Resgatando id do header e fazendo descriptografia do token
+        const personal_id = getUserIdFromToken(req);
+
+        if(!personal_id){
+            return res.status(401).json({error: "Unauthorized"});
+        }
 
         try{
             const personal = await prisma.user.findUnique({

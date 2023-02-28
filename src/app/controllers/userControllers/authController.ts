@@ -9,6 +9,7 @@ export class LoginUserController{
     async handle(req: Request, res: Response){
         const{email, password} = req.body;
         try{
+            //Encontrar usuário pelo email
             const user = await prisma.user.findUnique({where:{email:email}});
     
             //Confirmação de que existe um usuário com este email

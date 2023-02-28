@@ -10,7 +10,7 @@ export class DeleteAccountController{
         
         try{
             if (!(await prisma.user.findUnique({ where: { id: id } }))) {
-                return res.status(400).json({ error: "User not found" });
+                return res.status(404).json({ error: "User not found" });
             }
 
             const deleteAccount = new DeleteAccount();

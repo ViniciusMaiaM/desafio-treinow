@@ -8,6 +8,7 @@ export const prisma = new PrismaClient();
 export class CreateExerciseController{
     async handle(req: Request, res: Response){
         const {name, duration, date} = req.body;
+        //Resgatando id do header e fazendo descriptografia do token
         const personal_id = getUserIdFromToken(req);
 
         //Validações básicos do body do request
