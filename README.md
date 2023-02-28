@@ -9,9 +9,9 @@
 </p>
 
 - [📑 Sobre o projeto](#-sobre)
-- [🚀 Começando](#-comecando)
-- [📥 Gerenciador de pacotes](#-pacotes)
 - [📖 Documentação](#-documentacao)
+- [📥 Gerenciador de pacotes](#-pacotes)
+- [🚀 Começando](#-comecando)
 
 ## 📖 Documentação
 
