@@ -52,3 +52,5 @@ O projeto foi desenvolvido utilizando NPM, mas você pode utilizar qualquer um d
 ### Passo 6:
   > Depois rode no terminal o comando:**npm run studio**. Isto mostrará o seu banco de dados utilizando o layout prisma.
 
+### Passo 7:
+  > Caso tenha erros com o migrate, execute:**npx prisma migrate reset** e as migrações serão resetadas, então repita os passos anteriores.
